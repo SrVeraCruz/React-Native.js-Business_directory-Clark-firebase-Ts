@@ -2,12 +2,12 @@ import { View, Text, FlatList, Image } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
-import { SliderItem } from '@/types/types'
+import { SliderType } from '@/types/types'
 
 
 
 export default function Slider() {
-  const [sliderList, setSliderList] = useState<SliderItem[]>([])
+  const [sliderList, setSliderList] = useState<SliderType[]>([])
 
   const getSliderList = useCallback( async () => {
     setSliderList([])
@@ -15,7 +15,7 @@ export default function Slider() {
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      setSliderList((prev) => [...prev, doc.data() as SliderItem])
+      setSliderList((prev) => [...prev, doc.data() as SliderType])
     })
   }, []) 
 
@@ -44,6 +44,7 @@ export default function Slider() {
         showsHorizontalScrollIndicator={false}
         renderItem={({item, index}) => (
           <Image
+            key={index}
             source={{uri: item.imageUrl}}
             style={{
               width: 300,

@@ -1,18 +1,17 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
-import { CategoryList } from '@/types/types'
+import { CategoryType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
 
 interface CategoryItemProps {
-  category: CategoryList,
-  onCategoryPress: (category: CategoryList) => void
+  category: CategoryType,
+  onCategoryPress: (category: CategoryType) => void
 }
 
 export default function CategoryItem({
   category,
   onCategoryPress
 }: CategoryItemProps) {
-  console.log(category)
 
   return (
     <TouchableOpacity 
