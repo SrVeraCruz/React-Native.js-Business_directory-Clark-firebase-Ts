@@ -5,10 +5,12 @@ import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import CategoryItem from './CategoryItem'
 import { CategoryType } from '@/types/types'
+import { useRouter } from 'expo-router'
 
 
 export default function Category() {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([])
+  const router = useRouter()
 
   const getCategoryList = useCallback(async () => {
     setCategoryList([])
@@ -68,7 +70,9 @@ export default function Category() {
             key={index}
             category={item}
             onCategoryPress={
-              (category: CategoryType) => console.log(category)
+              (category: CategoryType) => router.push(
+                `/businesslist/${category.name}`
+              )
             }
           />
         )}
