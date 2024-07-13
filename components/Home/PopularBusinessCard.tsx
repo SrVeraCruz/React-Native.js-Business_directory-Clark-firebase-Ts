@@ -1,7 +1,8 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { BusinessType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
+import { useRouter } from 'expo-router'
 
 interface PopularBusinessCardProps {
   business: BusinessType
@@ -10,8 +11,15 @@ interface PopularBusinessCardProps {
 export default function PopularBusinessCard({
   business
 }: PopularBusinessCardProps) {
+  const router = useRouter()
+
+  const handlePress = () => {
+    router.push(`/businessdetail/${business.id}`)
+  }
+
   return (
-    <View
+    <TouchableOpacity
+      onPress={handlePress}
       style={{
         marginLeft: 20,
         padding: 10,
@@ -94,6 +102,6 @@ export default function PopularBusinessCard({
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }

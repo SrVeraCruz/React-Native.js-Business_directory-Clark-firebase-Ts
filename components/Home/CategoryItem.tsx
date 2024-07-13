@@ -2,16 +2,16 @@ import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { CategoryType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
+import { useRouter } from 'expo-router'
 
 interface CategoryItemProps {
   category: CategoryType,
-  onCategoryPress: (category: CategoryType) => void
 }
 
 export default function CategoryItem({
   category,
-  onCategoryPress
 }: CategoryItemProps) {
+  const router = useRouter()
 
   return (
     <TouchableOpacity 
@@ -19,7 +19,9 @@ export default function CategoryItem({
         alignItems: 'center',
         marginRight: 15
       }}
-      onPress={() => onCategoryPress(category)}
+      onPress={() => router.push(
+        `/businesslist/${category.name}`
+      )}
     >
       <View
         style={{

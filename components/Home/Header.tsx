@@ -3,6 +3,7 @@ import React from 'react'
 import { useUser } from '@clerk/clerk-expo'
 import { Colors } from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons'
+import Avatar from '../Utils/Avatar'
 
 export default function Header() {
   const { user } = useUser()
@@ -25,14 +26,7 @@ export default function Header() {
           gap: 10
         }}
       >
-        <Image 
-          source={{uri: user?.imageUrl}}
-          style={{
-            width: 45,
-            height: 45,
-            borderRadius: 99
-          }}
-        />
+        <Avatar src={user?.imageUrl} />
 
         <View>
           <Text style={{ color: '#fff' }}>

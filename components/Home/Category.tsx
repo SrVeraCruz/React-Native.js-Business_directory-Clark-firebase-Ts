@@ -1,18 +1,18 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Colors } from '@/constants/Colors'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import CategoryItem from './CategoryItem'
 import { CategoryType } from '@/types/types'
-import { useRouter } from 'expo-router'
 
 
 export default function Category() {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([])
-  const router = useRouter()
+  const [isLoading, setIsLoading] = useState(false)
 
   const getCategoryList = useCallback(async () => {
+    setIsLoading(true)
     setCategoryList([])
     const q = query(collection(db, 'Category'))
     const querySnapshot = await getDocs(q)
@@ -20,6 +20,7 @@ export default function Category() {
     querySnapshot.forEach((doc) => {
       setCategoryList((prev) => [...prev, doc.data() as CategoryType])
     })
+    setIsLoading(false)
   }, [])
 
   useEffect(() => {
@@ -39,7 +40,6 @@ export default function Category() {
       >
         <Text
           style={{
-            paddingLeft: 20,
             marginTop: 20,
             marginBottom: 5,
             fontSize: 20,
@@ -58,25 +58,31 @@ export default function Category() {
         </Text>
       </View>
       
-      <FlatList 
-        data={categoryList}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        style={{
-          marginLeft: 20
-        }}
-        renderItem={({item, index}) => (
-          <CategoryItem
-            key={index}
-            category={item}
-            onCategoryPress={
-              (category: CategoryType) => router.push(
-                `/businesslist/${category.name}`
-              )
-            }
+      {isLoading 
+        ? <ActivityIndicator
+            size={'large'}
+            color={Colors.PRIMARY}
+            style={{
+              height: 104
+            }}
           />
-        )}
-      />
+        : categoryList && (
+          <FlatList 
+            data={categoryList}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={{
+              marginLeft: 20
+            }}
+            renderItem={({item, index}) => (
+              <CategoryItem
+                key={index}
+                category={item}
+              />
+            )}
+          />
+        )
+      }
     </View>
   )
 }

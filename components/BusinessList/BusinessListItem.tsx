@@ -1,7 +1,8 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { BusinessType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
+import { useRouter } from 'expo-router'
 
 interface BusinessListItemProps {
   business: BusinessType
@@ -10,8 +11,13 @@ interface BusinessListItemProps {
 export default function BusinessListItem({
   business
 }: BusinessListItemProps ) {
+  const router = useRouter()
+
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => router.push(
+        `/businessdetail/${business.id}`
+      )}
       style={{
         padding: 10,
         margin: 10,
@@ -76,6 +82,6 @@ export default function BusinessListItem({
             </Text>
           </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }

@@ -1,4 +1,5 @@
 import LoginSrcreen from "@/components/LoginSrcreen";
+import { Colors } from "@/constants/Colors";
 import { 
   ClerkProvider, 
   SignedIn, 
@@ -8,16 +9,12 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 
 import * as SecureStore from 'expo-secure-store';
+import { ActivityIndicator, View } from "react-native";
 
 const tokenCache = {
   async getToken(key: string) {
     try {
       const item = await SecureStore.getItemAsync(key);
-      if (item) {
-        console.log(`${key} was used 🔐 \n`);
-      } else {
-        console.log("No values stored under key: " + key);
-      }
       return item;
     } catch (error) {
       console.error("SecureStore get item error: ", error);
@@ -35,11 +32,28 @@ const tokenCache = {
 };
 
 export default function RootLayout() {
-  useFonts({
+  const [ fontsLoaded ] = useFonts({
     'outfit': require('../assets/fonts/Outfit-Regular.ttf'),
     'outfit-medium': require('../assets/fonts/Outfit-Medium.ttf'),
     'outfit-bold': require('../assets/fonts/Outfit-Bold.ttf')
   })
+
+  if(!fontsLoaded) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center', 
+          alignItems: 'center'
+        }}
+      >
+        <ActivityIndicator 
+          size={'large'}
+          color={Colors.PRIMARY}
+        />
+      </View>
+    )
+  }
 
   return (
     <ClerkProvider 

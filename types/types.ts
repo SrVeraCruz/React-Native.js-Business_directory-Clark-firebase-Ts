@@ -1,20 +1,30 @@
-export interface SliderType {
+export type SliderType = {
   name: string,
   imageUrl: string
 }
 
-export interface CategoryType {
+export type CategoryType = {
   id: string,
   name: string,
   icon: string
 }
 
-export interface BusinessType {
+export type ReviewType = {
+  rating: number,
+  comment: string,
+  userName: string | null | undefined,
+  userImage: string | undefined,
+  useEmail: string | undefined
+}
+
+export type BusinessType = {
+  id: string,
   about: string,
   address: string,
   category: string,
   contact: string,
   imageUrl: string
   name: string,
+  reviews: ReviewType[],
   website: string,
 }

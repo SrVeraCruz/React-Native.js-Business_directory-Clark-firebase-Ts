@@ -1,15 +1,18 @@
-import { View, Text, FlatList, Image } from 'react-native'
+import { View, Text, FlatList, Image, ActivityIndicator } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import { SliderType } from '@/types/types'
+import { Colors } from '@/constants/Colors'
 
 
 
 export default function Slider() {
   const [sliderList, setSliderList] = useState<SliderType[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const getSliderList = useCallback( async () => {
+    setIsLoading(true)
     setSliderList([])
     const  q = query(collection(db, 'Slider'))
     const querySnapshot = await getDocs(q);
@@ -17,6 +20,7 @@ export default function Slider() {
     querySnapshot.forEach((doc) => {
       setSliderList((prev) => [...prev, doc.data() as SliderType])
     })
+    setIsLoading(false)
   }, []) 
 
   useEffect(() => {
@@ -37,24 +41,35 @@ export default function Slider() {
         #Special for you
       </Text>
 
-      <FlatList 
-        data={sliderList}
-        horizontal={true}
-        style={{ paddingLeft: 20 }}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({item, index}) => (
-          <Image
-            key={index}
-            source={{uri: item.imageUrl}}
+      {isLoading 
+        ? <ActivityIndicator 
+            size={'large'}
+            color={Colors.PRIMARY}
             style={{
-              width: 300,
-              height: 150,
-              borderRadius: 15,
-              marginRight: 15
+              height: 150
             }}
           />
-        )}
-      />
+        : sliderList && (
+          <FlatList 
+            data={sliderList}
+            horizontal={true}
+            style={{ paddingLeft: 20 }}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item, index}) => (
+              <Image
+                key={index}
+                source={{uri: item.imageUrl}}
+                style={{
+                  width: 300,
+                  height: 150,
+                  borderRadius: 15,
+                  marginRight: 15
+                }}
+              />
+            )}
+          />
+        )
+      }
     </View>
   )
 }
