@@ -1,5 +1,6 @@
 import LoginSrcreen from "@/components/LoginSrcreen";
 import { Colors } from "@/constants/Colors";
+import CategoryFilterContextProvider from "@/contexts/CategorySelectedContext";
 import { 
   ClerkProvider, 
   SignedIn, 
@@ -63,9 +64,11 @@ export default function RootLayout() {
       }
     >
       <SignedIn>
-        <Stack screenOptions={{ headerShown: false}}>
-          <Stack.Screen name="(tabs)" />
-        </Stack>
+        <CategoryFilterContextProvider>
+          <Stack screenOptions={{ headerShown: false}}>
+            <Stack.Screen name="(tabs)" />
+          </Stack>
+        </CategoryFilterContextProvider>
       </SignedIn>
       <SignedOut>
         <LoginSrcreen />

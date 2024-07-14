@@ -4,6 +4,7 @@ import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import { SliderType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
+import Headline from '../Utils/Headline'
 
 
 
@@ -28,18 +29,12 @@ export default function Slider() {
   }, [])
 
   return (
-    <View>
-      <Text
-        style={{
-          fontFamily: 'outfit-bold',
-          fontSize: 20,
-          paddingLeft: 20,
-          paddingTop: 20,
-          marginBottom: 5
-        }}
-      >
-        #Special for you
-      </Text>
+    <View
+      style={{
+        gap: 5
+      }}
+    >
+      <Headline title='#Special for you' />
 
       {isLoading 
         ? <ActivityIndicator 
@@ -53,7 +48,6 @@ export default function Slider() {
           <FlatList 
             data={sliderList}
             horizontal={true}
-            style={{ paddingLeft: 20 }}
             showsHorizontalScrollIndicator={false}
             renderItem={({item, index}) => (
               <Image
@@ -63,7 +57,7 @@ export default function Slider() {
                   width: 300,
                   height: 150,
                   borderRadius: 15,
-                  marginRight: 15
+                  marginRight: 20
                 }}
               />
             )}

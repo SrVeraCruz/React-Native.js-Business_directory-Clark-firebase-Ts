@@ -1,9 +1,9 @@
-import { View, Text, Image, TextInput } from 'react-native'
+import { View, Text } from 'react-native'
 import React from 'react'
 import { useUser } from '@clerk/clerk-expo'
 import { Colors } from '@/constants/Colors'
-import { Ionicons } from '@expo/vector-icons'
 import Avatar from '../Utils/Avatar'
+import SearchBar from '../Utils/SearchBar'
 
 export default function Header() {
   const { user } = useUser()
@@ -23,7 +23,8 @@ export default function Header() {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          gap: 10
+          gap: 10,
+          marginBottom: 15,
         }}
       >
         <Avatar src={user?.imageUrl} />
@@ -44,31 +45,7 @@ export default function Header() {
         </View>
       </View>
       
-      <View
-        style={{
-          flexDirection: 'row',
-          gap: 10,
-          alignItems: 'center',
-          backgroundColor: '#fff',
-          padding: 10,
-          marginHorizontal: 10,
-          marginTop: 15,
-          borderRadius: 8
-        }}
-      >
-        <Ionicons 
-          name="search" 
-          size={24} 
-          color={Colors.PRIMARY} 
-        />
-        <TextInput 
-          placeholder='Search...' 
-          style={{
-            fontFamily: 'outifit',
-            fontSize:16
-          }}
-        />
-      </View>
+      <SearchBar />
     </View>
   )
 }

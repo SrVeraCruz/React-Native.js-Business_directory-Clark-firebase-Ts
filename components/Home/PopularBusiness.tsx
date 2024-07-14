@@ -1,10 +1,26 @@
-import { View, Text, FlatList, ActivityIndicator } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
 import { Colors } from '@/constants/Colors'
-import { collection, getDocs, limit, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import { BusinessType } from '@/types/types'
 import PopularBusinessCard from './PopularBusinessCard'
+import Headline from '../Utils/Headline'
+import { 
+  View, 
+  FlatList, 
+  ActivityIndicator
+ } from 'react-native'
+
+import React, { 
+  useCallback, 
+  useEffect, 
+  useState 
+} from 'react'
+
+import { 
+  collection, 
+  getDocs, 
+  limit, 
+  query 
+} from 'firebase/firestore'
 
 export default function PopularBusiness() {
   const [businessList, setBusinessList] = useState<BusinessType[]>([])
@@ -29,37 +45,12 @@ export default function PopularBusiness() {
   }, [])
 
   return (
-    <View>
-      <View 
-        style={{
-          paddingLeft: 20,
-          paddingTop: 20,
-          paddingRight: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 10
-        }}
-      >
-        <Text
-          style={{
-            marginTop: 20,
-            marginBottom: 5,
-            fontSize: 20,
-            fontFamily: 'outfit-bold'
-          }}
-        >
-          Popular Business
-        </Text>
-        <Text
-          style={{
-            color: Colors.PRIMARY,
-            fontFamily: 'outfit-medium'
-          }}
-        >
-          View All
-        </Text>
-      </View>
+    <View
+      style={{
+        gap: 10
+      }}
+    >
+      <Headline title='Popular Business' allOption />
 
       {isLoading 
         ? <ActivityIndicator

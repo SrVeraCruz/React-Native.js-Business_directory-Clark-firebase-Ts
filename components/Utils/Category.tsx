@@ -1,15 +1,34 @@
-import { View, Text, FlatList, ActivityIndicator } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import { View, FlatList, ActivityIndicator, StyleProp, ViewStyle } from 'react-native'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Colors } from '@/constants/Colors'
 import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
-import CategoryItem from './CategoryItem'
+import CategoryItem from '../Home/CategoryItem'
 import { CategoryType } from '@/types/types'
+import Headline from './Headline'
+import { useRouter } from 'expo-router'
+import { CategoryFilterContext } from '@/contexts/CategorySelectedContext'
 
+interface CategoryProps {
+  style?: StyleProp<ViewStyle>,
+  headline?: boolean,
+  explore?: boolean,
+}
 
-export default function Category() {
+export default function Category({
+  style,
+  explore,
+  headline=true,
+}: CategoryProps ) {
   const [categoryList, setCategoryList] = useState<CategoryType[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const context = useContext(CategoryFilterContext)
+  const router = useRouter()
+
+  if (!context) {
+    throw new Error('useContext must be used within a CategoryFilterProvider')
+  }
+  const { setCategoryFilter } = context
 
   const getCategoryList = useCallback(async () => {
     setIsLoading(true)
@@ -22,41 +41,31 @@ export default function Category() {
     })
     setIsLoading(false)
   }, [])
+  
+  const handlerOnCategoryPress = useCallback((category: CategoryType) => {
+    if(explore) {
+      setCategoryFilter(category.name)
+    } else {
+      router.push(`/businesslist/${category.name}`)
+    }
+  }, [router, explore])
 
   useEffect(() => {
     getCategoryList()
   }, [])
 
   return (
-    <View>
-      <View 
-        style={{
-          padding: 20,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginTop: 10
-        }}
-      >
-        <Text
-          style={{
-            marginTop: 20,
-            marginBottom: 5,
-            fontSize: 20,
-            fontFamily: 'outfit-bold'
-          }}
-        >
-          Category
-        </Text>
-        <Text
-          style={{
-            color: Colors.PRIMARY,
-            fontFamily: 'outfit-medium'
-          }}
-        >
-          View All
-        </Text>
-      </View>
+    <View
+      style={[
+        {
+          gap: 5
+        },
+        style
+      ]}
+    >
+      {headline && (
+        <Headline title='Category' allOption />
+      )}
       
       {isLoading 
         ? <ActivityIndicator
@@ -71,13 +80,11 @@ export default function Category() {
             data={categoryList}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
-            style={{
-              marginLeft: 20
-            }}
             renderItem={({item, index}) => (
               <CategoryItem
                 key={index}
                 category={item}
+                onCategoryPress={() => handlerOnCategoryPress(item)}
               />
             )}
           />

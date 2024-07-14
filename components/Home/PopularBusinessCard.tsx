@@ -21,7 +21,7 @@ export default function PopularBusinessCard({
     <TouchableOpacity
       onPress={handlePress}
       style={{
-        marginLeft: 20,
+        marginRight: 20,
         padding: 10,
         backgroundColor: '#fff',
         borderRadius: 15
