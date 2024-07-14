@@ -3,6 +3,13 @@ export type SliderType = {
   imageUrl: string
 }
 
+export type MenuItemType = {
+  id: number,
+  name: string,
+  icon: any,
+  path: string
+}
+
 export type CategoryType = {
   id: string,
   name: string,
