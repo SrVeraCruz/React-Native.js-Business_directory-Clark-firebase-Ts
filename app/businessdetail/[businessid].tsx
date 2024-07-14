@@ -44,14 +44,9 @@ export default function BusinessDetail() {
       {businessDetail && !isLoading 
       ? <View>
           <Intro business={businessDetail} />
-
           <ActionButton business={businessDetail} />
-
           <About business={businessDetail} />
-
-          <Review 
-            business={businessDetail} 
-          />
+          <Review business={businessDetail} />
         </View>
       : isLoading 
         ? <ActivityIndicator 

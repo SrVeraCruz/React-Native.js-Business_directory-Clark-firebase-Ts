@@ -7,6 +7,7 @@ import { arrayUnion, doc, updateDoc } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import { useUser } from '@clerk/clerk-expo'
 import ReviewBox from './ReviewBox'
+import Button from '../Utils/Button'
 
 interface ReviewProps {
   business: BusinessType,
@@ -92,30 +93,17 @@ export default function Review({
             borderWidth: 1,
             padding: 10,
             borderRadius: 10,
-            borderColor: Colors.GRAY
+            borderColor: Colors.GRAY,
+            marginBottom: 20
           }}
         />
 
-        <TouchableOpacity
-          disabled={!userInput}
-          onPress={handleSubmit}
-          style={{
-            padding: 10,
-            backgroundColor: Colors.PRIMARY,
-            borderRadius: 6,
-            marginTop: 20
-          }}
+        <Button 
+          disabled={!userInput} 
+          onPress={() => handleSubmit()}
         >
-          <Text
-            style={{
-              fontFamily: 'outfit-medium',
-              color: '#fff',
-              textAlign: 'center'
-            }}
-          >
-            Submit
-          </Text>
-        </TouchableOpacity>
+          Submit
+        </Button>
       </View>
 
       <View

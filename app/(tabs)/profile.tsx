@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import UserIntro from '@/components/Profile/UserIntro'
 import MenuList from '@/components/Profile/MenuList'
-import { Colors } from '@/constants/Colors'
 
 export default function profile() {
   return (

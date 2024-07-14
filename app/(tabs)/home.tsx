@@ -7,15 +7,17 @@ import PopularBusiness from '@/components/Home/PopularBusiness'
 
 export default function home() {
   return (
-    <ScrollView>
+    <View style={{height: '100%'}}>
       <Header />
-      <View style={styles.container} >
-        <Slider />
-        <Category />
-        <PopularBusiness />
-        <View style={{height: 50}} />
-      </View>
-    </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.container} >
+          <Slider />
+          <Category />
+          <PopularBusiness />
+          <View style={{height: 50}} />
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 

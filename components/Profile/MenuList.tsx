@@ -8,7 +8,7 @@ export default function MenuList() {
       id: 1,
       name: 'Add Business',
       icon: require('../../assets/images/add.png'),
-      path: ''
+      path: '/business/add-business'
     },
     {
       id: 2,

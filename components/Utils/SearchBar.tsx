@@ -33,7 +33,8 @@ export default function SearchBar({
         placeholder='Search...' 
         style={{
           fontFamily: 'outifit',
-          fontSize:16
+          fontSize:16,
+          flex: 1
         }}
       />
     </View>

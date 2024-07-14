@@ -1,7 +1,14 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
 import React from 'react'
+import { 
+  Text, 
+  Image, 
+  StyleSheet, 
+  TouchableOpacity 
+} from 'react-native'
+
 import { MenuItemType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
+import { useRouter } from 'expo-router'
 
 interface MenuBoxProps {
   item: MenuItemType
@@ -10,8 +17,17 @@ interface MenuBoxProps {
 export default function MenuBox({
   item
 }: MenuBoxProps ) {
+  const router = useRouter()
+
+  const handlePress = () => {
+    router.push(item.path)
+  }
+
   return (
-    <View style={style.container}>
+    <TouchableOpacity 
+      onPress={handlePress}
+      style={style.container}
+    >
       <Image 
         source={item.icon}
         style={{
@@ -22,7 +38,7 @@ export default function MenuBox({
       <Text style={style.title}>
         {item.name}
       </Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
