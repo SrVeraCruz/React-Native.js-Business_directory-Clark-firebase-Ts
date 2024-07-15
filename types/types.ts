@@ -34,4 +34,7 @@ export type BusinessType = {
   name: string,
   reviews: ReviewType[],
   website: string,
+  username: string,
+  userEmail: string,
+  userImage: string,
 }

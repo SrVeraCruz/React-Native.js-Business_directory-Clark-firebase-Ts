@@ -52,7 +52,9 @@ export default function ActionButton({
       return
     } 
 
-    Linking.openURL(item.url)
+    if(item.url) {
+      Linking.openURL(item.url)
+    }
   }
 
   return (

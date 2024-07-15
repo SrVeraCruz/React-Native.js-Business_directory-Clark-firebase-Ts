@@ -16,7 +16,7 @@ interface CategoryListType {
   value: string
 }
 
-export default function addBusiness() {
+export default function AddBusiness() {
   const navigation = useNavigation()
   const [image, setImage] = useState<string | null>(null)
   const [categoryList, setCategoryList] = useState<CategoryListType[]>([])
@@ -118,7 +118,11 @@ export default function addBusiness() {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: 'Add new Business',
-      headerShown: true
+      headerShown: true,
+      headerStyle: {
+        backgroundColor: Colors.PRIMARY
+      },
+      headerTintColor: '#fff'
     })
 
     getCategoryList()

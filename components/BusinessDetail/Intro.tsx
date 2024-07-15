@@ -1,8 +1,11 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, Image, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
+import React, { useMemo } from 'react'
 import { BusinessType } from '@/types/types'
-import { Ionicons } from '@expo/vector-icons';
+import { EvilIcons, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from '@/configs/FirebaseConfig';
+import { useUser } from '@clerk/clerk-expo';
 
 interface IntroProps {
   business: BusinessType
@@ -12,6 +15,36 @@ export default function Intro({
   business
 }: IntroProps ) {
   const router = useRouter()
+  const { user } = useUser()
+
+  const iOwnPost = useMemo(() => {
+    return user?.primaryEmailAddress?.emailAddress === business.userEmail
+  }, [])
+
+  const handleDelete = () => {
+    Alert.alert('Do you want to delete?', 'Do you really want to delete this business?', [
+      {
+        text: 'Cancel',
+        style: 'cancel'
+      },
+      {
+        text: 'Delete',
+        style: 'destructive',
+        onPress: () => deleteBusiness()
+      }
+    ])
+  }
+  
+  const deleteBusiness = async () => {
+    await deleteDoc(doc(db, 'BusinessList', business?.id))
+    .then(() => {
+      router.back()
+      ToastAndroid.show('Business deleted sucessfully', ToastAndroid.BOTTOM)
+    })
+    .catch(() => {
+      ToastAndroid.show('Something went wrong', ToastAndroid.BOTTOM)
+    })
+  }
 
   return (
     <View>
@@ -57,22 +90,36 @@ export default function Intro({
           borderTopRightRadius: 25,
         }}
       >
-        <Text
+        <View 
           style={{
-            fontSize: 26,
-            fontFamily: 'outfit-bold'
+            flexDirection: 'row',
+            justifyContent: 'space-between',
           }}
         >
-          {business?.name}
-        </Text>
-        <Text
-          style={{
-            fontFamily: 'outfit',
-            fontSize: 18
-          }}
-        >
-          {business?.address}
-        </Text>
+          <View>
+            <Text
+              style={{
+                fontSize: 26,
+                fontFamily: 'outfit-bold'
+              }}
+            >
+              {business?.name}
+            </Text>
+            <Text
+              style={{
+                fontFamily: 'outfit',
+                fontSize: 18
+              }}
+            >
+              {business?.address}
+            </Text>
+          </View>
+          {iOwnPost && (
+            <TouchableOpacity onPress={handleDelete}>
+              <EvilIcons name="trash" size={38} color="red" />
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     </View>
   )

@@ -1,4 +1,4 @@
-import { View, Text, FlatList } from 'react-native'
+import { View, FlatList } from 'react-native'
 import React from 'react'
 import MenuBox from './MenuBox'
 
@@ -14,7 +14,7 @@ export default function MenuList() {
       id: 2,
       name: 'My Business',
       icon: require('../../assets/images/business-and-trade.png'),
-      path: ''
+      path: '/business/my-business'
     },
     {
       id: 3,

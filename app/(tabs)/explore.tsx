@@ -6,8 +6,8 @@ import Category from '@/components/Utils/Category'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { db } from '@/configs/FirebaseConfig'
 import { BusinessType } from '@/types/types'
-import BusinessList from '@/components/Explore/BusinessList'
 import { CategoryFilterContext } from '@/contexts/CategorySelectedContext'
+import BusinessList from '@/components/Utils/BusinessList'
 
 export default function explore() {
   const [businessList, setBusinessList] = useState<BusinessType[]>([])

@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity, Text } from 'react-native'
 import React from 'react'
 import { BusinessType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
@@ -22,9 +22,9 @@ export default function BusinessBox({
       onPress={handlePress}
       style={{
         backgroundColor: '#fff',
-        borderBottomLeftRadius: 15,
-        borderBottomRightRadius: 15,
+        borderRadius: 15,
         marginTop: 15,
+        overflow: 'hidden'
       }}
     >
       <Image 
@@ -32,8 +32,6 @@ export default function BusinessBox({
         style={{
           width: '100%',
           height: 150,
-          borderTopLeftRadius: 15,
-          borderTopRightRadius: 15
         }}
       />
       <View style={{padding: 10}}>

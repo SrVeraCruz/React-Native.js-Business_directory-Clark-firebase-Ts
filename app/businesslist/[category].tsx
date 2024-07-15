@@ -34,7 +34,11 @@ export default function BusinessListByCategory() {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      headerTitle: category
+      headerTitle: category,
+      headerStyle: {
+        backgroundColor: Colors.PRIMARY
+      },
+      headerTintColor: '#fff'
     })
 
     getBusinessList()
@@ -48,10 +52,7 @@ export default function BusinessListByCategory() {
           onRefresh={getBusinessList}
           refreshing={isLoading}
           renderItem={({item, index}) => (
-            <BusinessListItem
-              key={index}
-              business={item}
-            />
+            <BusinessListItem key={index} business={item}/>
           )}
         />
       : isLoading 
