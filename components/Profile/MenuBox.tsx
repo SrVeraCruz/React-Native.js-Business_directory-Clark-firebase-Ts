@@ -3,12 +3,14 @@ import {
   Text, 
   Image, 
   StyleSheet, 
-  TouchableOpacity 
+  TouchableOpacity, 
+  Share
 } from 'react-native'
 
 import { MenuItemType } from '@/types/types'
 import { Colors } from '@/constants/Colors'
 import { useRouter } from 'expo-router'
+import { useAuth } from '@clerk/clerk-expo'
 
 interface MenuBoxProps {
   item: MenuItemType
@@ -17,9 +19,22 @@ interface MenuBoxProps {
 export default function MenuBox({
   item
 }: MenuBoxProps ) {
+  const { signOut } = useAuth()
   const router = useRouter()
 
   const handlePress = () => {
+    if(item.path === 'logout') {
+      signOut()
+      return
+    }
+    
+    if(item.path === 'share') {
+      Share.share({
+        message: 'Download the Business Directory App by Vera Cruz, Download URL:'
+      })
+      return
+    }
+
     router.push(item.path)
   }
 

@@ -38,7 +38,7 @@ export default function Intro({
   const deleteBusiness = async () => {
     await deleteDoc(doc(db, 'BusinessList', business?.id))
     .then(() => {
-      router.back()
+      router.push('/business/my-business')
       ToastAndroid.show('Business deleted sucessfully', ToastAndroid.BOTTOM)
     })
     .catch(() => {

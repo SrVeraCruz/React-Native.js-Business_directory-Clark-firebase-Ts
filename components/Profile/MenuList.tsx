@@ -20,13 +20,13 @@ export default function MenuList() {
       id: 3,
       name: 'Share App',
       icon: require('../../assets/images/share_1.png'),
-      path: ''
+      path: 'share'
     },
     {
       id: 4,
       name: 'Logout ',
       icon: require('../../assets/images/logout.png'),
-      path: ''
+      path: 'logout'
     },
   ]
 
